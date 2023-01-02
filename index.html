@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASE Final Project</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./js/script.js"></script>
+    <style type="text/css">
+      @import "./css/animate.css";
+      @import "./css/style.css";
+      @import "./css/loader.css";
+    </style>
+  </head>
+
+  <body>
+    <!-- 入口介面 -->
+    <div class="home-page" id="home-page">
+      <h1 class="text-light animate__animated animate__bounce">ASE期末專案</h1>
+      <button
+        type="button"
+        class="btn btn-primary btn-lg shadow"
+        onclick="pageOutThenPageIn('.home-page','.trans-setting-page',resetData())"
+      >
+        文字翻譯
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary btn-lg shadow"
+        onclick="pageOutThenPageIn('.home-page','.poker-setting-page',resetData())"
+      >
+        樸克推薦
+      </button>
+      <!-- Scrollable modal -->
+      <!-- Button trigger modal -->
+      <button
+        type="button"
+        class="btn btn-info"
+        data-toggle="modal"
+        data-target="#aboutModal"
+      >
+        關於
+      </button>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="aboutModal"
+        tabindex="-1"
+        aria-labelledby="aboutModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="aboutModalLabel">ASE期末專案</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h1>多功能圖片識別</h1>
+              <p>雖然說是多功能，但其實也只有兩個，小細節就不要在意了。</p>
+              <h3 style="margin-top: 20px">組員</h3>
+              <h6>朱家樂 - 網頁前端、翻譯功能</h6>
+              <h6>陳恩儒 - Andriod APP前端</h6>
+              <h6>宋家齊 - 樸克牌識別模型</h6>
+              <h6>林翼潔 - 樸克牌推薦邏輯</h6>
+              <h3 style="margin-top: 20px">說明</h3>
+              <h6>在開始畫面可以選擇功能，</h6>
+              <h6>選擇功能後會進入資料輸入畫面，畫面如下：</h6>
+              <div class="about-img-container">
+                <img
+                  class="about-img"
+                  src="https://cdn.discordapp.com/attachments/862518605433012268/1059575105321177159/image.png"
+                />
+              </div>
+              <h6 style="margin-top: 10px">
+                輸入資料完成後，按下右下方的藍色開始鍵，等待程式回應後即可得到結果。
+              </h6>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-dark">github</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading介面 -->
+    <div class="loading-page d-none">
+      <div class="loader"></div>
+    </div>
+
+    <!-- 翻譯設定介面 -->
+    <div class="trans-setting-page d-none">
+      <div class="bg-secondary preview-img-container border shadow">
+        <img
+          class="preview-img preview-trans-img"
+          src=""
+          alt=""
+          id="previewTransImage"
+        />
+      </div>
+      <div class="input-group trans-setting-file">
+        <div class="custom-file">
+          <input
+            type="file"
+            class="custom-file-input"
+            id="inputGroupFile04"
+            aria-describedby="inputGroupFileAddon04"
+            accept=".jpg,.png"
+            onchange="handleTransFile(event)"
+          />
+          <label
+            class="custom-file-label trans-file-name-label"
+            for="inputGroupFile04"
+            data-browse="選取圖片"
+          ></label>
+        </div>
+      </div>
+      <!-- 選擇圖片原語言 -->
+      <div class="text-light text-and-toggle-flex">
+        選擇來源語言
+        <select
+          name=""
+          id="sourceLang"
+          class="btn-secondary rounded px-1 trans-setting-button toggle-container"
+        >
+          <option value="english">英文</option>
+          <option value="japanese">日文</option>
+          <option value="korean">韓文</option>
+          <option value="chinese(tra)">繁體中文</option>
+          <option value="chinese(sim)">簡體中文</option>
+        </select>
+      </div>
+      <!-- 選擇翻譯目標語言 -->
+      <div class="text-light text-and-toggle-flex">
+        選擇目標語言
+        <select
+          name=""
+          id="targetLang"
+          class="btn-secondary rounded px-1 trans-setting-button toggle-container"
+        >
+          <option value="english">英文</option>
+          <option value="japanese">日文</option>
+          <option value="korean">韓文</option>
+          <option value="chinese(tra)">繁體中文</option>
+          <option value="chinese(sim)">簡體中文</option>
+        </select>
+      </div>
+      <div class="start-and-back-button-flex">
+        <button
+          type="button"
+          class="btn btn-danger return-button"
+          onclick="backToHome('.trans-setting-page')"
+        >
+          返回
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary trans-setting-button"
+          onclick="startTrans()"
+        >
+          開始翻譯
+        </button>
+      </div>
+    </div>
+
+    <!-- 翻譯結果介面 -->
+    <div class="trans-result-page d-none">
+      <div class="bg-secondary result-img-container border shadow">
+        <!-- <img class="result-img" src="./img/trans_result_image.jpg" /> -->
+        <img class="result-img" src="" alt="" id="resultImage" />
+      </div>
+      <h3 class="text-light">↓ 翻譯結果 ↓</h3>
+      <div
+        class="text-left text-light bg-secondary result-text-container border shadow"
+      >
+        <p
+          id="transResult"
+          class="trans-result-text"
+          style="white-space: pre-wrap"
+        ></p>
+      </div>
+      <button
+        type="button"
+        class="btn btn-primary return-button"
+        onclick="backToHome('.trans-result-page')"
+      >
+        再試一次
+      </button>
+    </div>
+
+    <!-- 樸克設定介面 -->
+    <div class="poker-setting-page d-none">
+      <div class="bg-secondary preview-img-container border shadow">
+        <img
+          class="preview-img preview-poker-img"
+          src=""
+          alt=""
+          id="previewPokerImage"
+        />
+      </div>
+      <div class="input-group poker-setting-file">
+        <div class="custom-file">
+          <input
+            type="file"
+            class="custom-file-input"
+            id="inputGroupFile04"
+            aria-describedby="inputGroupFileAddon04"
+            accept=".jpg,.png"
+            onchange="handlePokerFile(event)"
+          />
+          <label
+            class="custom-file-label poker-file-name-label"
+            for="inputGroupFile04"
+            data-browse="選取圖片"
+          ></label>
+        </div>
+      </div>
+      <!-- 選擇牌的類型 -->
+      <div class="text-light text-and-toggle-flex">
+        選擇牌的類型
+        <select
+          name=""
+          id="pokerClass"
+          class="btn-secondary rounded px-1 toggle-container"
+        >
+          <option value="inHandPoker">手牌</option>
+          <option value="onFieldPoker">場上的牌</option>
+        </select>
+      </div>
+      <!-- <div class="text-light text-and-togle-flex">
+        選擇牌的類型
+        <div class="btn-group trans-setting-button toggle-container">
+          <button
+            type="button"
+            class="btn btn-secondary dropdown-toggle poker-class-toggle"
+            data-toggle="dropdown"
+            data-display="static"
+            aria-expanded="false"
+          >
+            選擇類型
+          </button>
+          <div class="dropdown-menu dropdown-menu-lg-right">
+            <button
+              class="dropdown-item"
+              type="button"
+              onclick="changePokerClass(this)"
+            >
+              手牌
+            </button>
+            <button
+              class="dropdown-item"
+              type="button"
+              onclick="changePokerClass(this)"
+            >
+              場上的牌
+            </button>
+          </div>
+        </div>
+      </div> -->
+      <!-- 選擇樸克玩法 -->
+      <div class="text-light text-and-toggle-flex">
+        選擇樸克玩法
+        <select
+          name=""
+          id="pokerPlayStyle"
+          class="btn-secondary rounded px-1 toggle-container"
+        >
+          <option value="playStyle1">玩法1</option>
+          <option value="playStyle2">玩法2</option>
+          <option value="playStyle3">玩法3</option>
+        </select>
+      </div>
+      <!-- <div class="text-light text-and-togle-flex">
+        選擇牌的玩法
+        <div class="btn-group trans-setting-button toggle-container">
+          <button
+            type="button"
+            class="btn btn-secondary dropdown-toggle poker-play-style-toggle"
+            data-toggle="dropdown"
+            data-display="static"
+            aria-expanded="false"
+          >
+            選擇玩法
+          </button>
+          <div class="dropdown-menu dropdown-menu-lg-right">
+            <button
+              class="dropdown-item"
+              type="button"
+              onclick="changePlayStyle(this)"
+            >
+              玩法1
+            </button>
+            <button
+              class="dropdown-item"
+              type="button"
+              onclick="changePlayStyle(this)"
+            >
+              玩法2
+            </button>
+            <button
+              class="dropdown-item"
+              type="button"
+              onclick="changePlayStyle(this)"
+            >
+              玩法3
+            </button>
+          </div>
+        </div>
+      </div> -->
+      <div class="start-and-back-button-flex">
+        <button
+          type="button"
+          class="btn btn-danger return-button"
+          onclick="backToHome('.poker-setting-page')"
+        >
+          返回
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary poker-setting-button"
+          onclick="pageOutThenPageInWithLoad('.poker-setting-page', '.poker-result-page', checkPokerSettingInfo())"
+        >
+          開始計算推薦
+        </button>
+      </div>
+    </div>
+    <!-- 樸克結果介面 -->
+    <div class="poker-result-page d-none">
+      <div class="bg-secondary result-img-container border shadow">
+        <!-- <img class="result-img" src="./img/poker_result_image.jpg" /> -->
+        <img class="result-img" src="" alt="" id="resultImage" />
+      </div>
+      <h3 class="text-light">↓ 出牌推薦結果 ↓</h3>
+      <div
+        class="text-left text-light bg-secondary result-poker-container border shadow"
+      >
+        <p class="poker-result-text text-wrap">
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur
+          consequuntur amet facilis recusandae repellat libero doloremque
+          praesentium inventore odio sint itaque ratione, voluptatem aut
+          necessitatibus eligendi tempora autem commodi nostrum?
+        </p>
+      </div>
+      <button
+        type="button"
+        class="btn btn-primary return-button"
+        onclick="backToHome('.poker-result-page')"
+      >
+        再試一次
+      </button>
+    </div>
+  </body>
+
+  <script>
+    function readFileAsBuffer(file) {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      return new Promise((resolve) => {
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    var eventTemp;
+    async function fileToBackend() {
+      const { files } = eventTemp.target;
+      $("#targetLang").val();
+      const formData = new FormData();
+      formData.append("file", files[0]);
+      formData.append("sourceLang", $("#sourceLang").val());
+      formData.append("targetLang", $("#targetLang").val());
+      const response = await fetch("/api/upload", {
+        method: "post",
+        body: formData,
+      });
+      const filename = response.headers
+        .get("content-disposition")
+        .replace(/.*utf-8''/, "");
+      $("#transResult").text(decodeURIComponent(filename));
+      const blob = await response.blob();
+      $("#resultImage").attr("src", URL.createObjectURL(blob));
+      eventTemp.target.value = "";
+    }
+    async function handleTransFile(event) {
+      eventTemp = event;
+      const { files } = event.target;
+      const imgBuffer = await readFileAsBuffer(files[0]);
+      const previewURL = URL.createObjectURL(
+        new Blob([imgBuffer], { type: "image/jpeg" })
+      );
+      $("#previewTransImage").attr("src", previewURL);
+    }
+    async function handlePokerFile(event) {
+      eventTemp = event;
+      const { files } = event.target;
+      const imgBuffer = await readFileAsBuffer(files[0]);
+      const previewURL = URL.createObjectURL(
+        new Blob([imgBuffer], { type: "image/jpeg" })
+      );
+      $("#previewPokerImage").attr("src", previewURL);
+    }
+    async function fileToPokerBackend() {
+      const { files } = eventTemp.target;
+      $("#targetLang").val();
+      const formData = new FormData();
+      formData.append("file", files[0]);
+      formData.append("sourceLang", $("#sourceLang").val());
+      formData.append("targetLang", $("#targetLang").val());
+      const response = await fetch("/api/upload", {
+        method: "post",
+        body: formData,
+      });
+      const filename = response.headers
+        .get("content-disposition")
+        .replace(/.*utf-8''/, "");
+      $("#transResult").text(decodeURIComponent(filename));
+      const blob = await response.blob();
+      $("#resultImage").attr("src", URL.createObjectURL(blob));
+      eventTemp.target.value = "";
+    }
+
+    // async function handlePokerFile(event) {
+    //   const { files } = event.target;
+    //   const imgBuffer = await readFileAsBuffer(files[0]);
+    //   const previewURL = URL.createObjectURL(
+    //     new Blob([imgBuffer], { type: "image/jpeg" })
+    //   );
+    //   $("#previewPokerImage").attr("src", previewURL);
+    //   const formData = new FormData();
+    //   formData.append("file", files[0]);
+    //   const response = await fetch("/api/upload", {
+    //     method: "post",
+    //     body: formData,
+    //   });
+    //   const blob = await response.blob();
+    //   $("#resultImage").attr("src", URL.createObjectURL(blob));
+    //   event.target.value = "";
+    // }
+  </script>
+</html>
