@@ -22,7 +22,7 @@ def ocr(lang, imgPath):
     ocrResult = ocrReader.readtext(imgPath)
     filteredOcrResult = []
     for i in ocrResult:
-        if (i[2] > 0.4): #最低預測機率
+        if (i[2] > 0.3): #最低預測機率
             filteredOcrResult.append(i)
     # if (len(filteredOcrResult) == 0):
     #     print("[INFO]"+"哎呀!好像找不到圖片上的文字呢!")
@@ -93,18 +93,18 @@ def drawImg(filteredOcrResult, imgPath):
             textNum = str(i+1)
             draw.rectangle(
                 drawCoord[i], outline="LightGreen", width=borderWidth)
-            # [x0, y0, x1, y1]
-            draw.rectangle([drawCoord[i][0], drawCoord[i][1], drawCoord[i]
-                           [0]+fontSpace*2, drawCoord[i][1]+fontSpace*2], fill=fill_color)
+            # [x0, y0, x1, y1] 繪製標號方塊
+            draw.rectangle([drawCoord[i][0]-fontSize, drawCoord[i][1], drawCoord[i]
+                           [0], drawCoord[i][1]+fontSpace*2], fill=fill_color)
             if (len(textNum) == 1):
-                # (x,y)
-                draw.text((drawCoord[i][0]+(borderWidth/2)+int(fontSpace/2), drawCoord[i][1]+int(fontSpace/2)),
+                # (x,y) 數字小於10時的標號位置
+                draw.text((drawCoord[i][0]-int(fontSize*0.75), drawCoord[i][1]+borderWidth),
                           textNum,
                           font=fnt,
                           fill="Black")
             else:
-                # (x,y)
-                draw.text((drawCoord[i][0]-(borderWidth/2)+int(fontSpace/2), drawCoord[i][1]+int(fontSpace/2)),
+                # (x,y) 數字大於或等於10時的標號位置
+                draw.text((drawCoord[i][0]-int(fontSize), drawCoord[i][1]+borderWidth),
                           textNum,
                           font=fnt,
                           fill="Black")
