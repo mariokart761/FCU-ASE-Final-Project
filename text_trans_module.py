@@ -22,7 +22,7 @@ def ocr(lang, imgPath):
     ocrResult = ocrReader.readtext(imgPath)
     filteredOcrResult = []
     for i in ocrResult:
-        if (i[2] > 0.5): #最低預測機率
+        if (i[2] > 0.4): #最低預測機率
             filteredOcrResult.append(i)
     # if (len(filteredOcrResult) == 0):
     #     print("[INFO]"+"哎呀!好像找不到圖片上的文字呢!")
