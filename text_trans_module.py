@@ -22,13 +22,12 @@ def ocr(lang, imgPath):
     ocrResult = ocrReader.readtext(imgPath)
     filteredOcrResult = []
     for i in ocrResult:
-        if i[2] > 0.4:
+        if (i[2] > 0.4): #最低預測機率
             filteredOcrResult.append(i)
-    if (len(filteredOcrResult) == 0):
-        print("[INFO]"+"哎呀!好像找不到圖片上的文字呢!")
-        print("[INFO]"+"請確認您的圖片與語言的選擇是否正確。")
+    # if (len(filteredOcrResult) == 0):
+    #     print("[INFO]"+"哎呀!好像找不到圖片上的文字呢!")
+    #     print("[INFO]"+"請確認您的圖片與語言的選擇是否正確。")
     return filteredOcrResult
-# ----------OCR結束----------
 
 
 # ----------翻譯----------
@@ -55,7 +54,6 @@ def trans(lang, filteredOcrResult):
     except Exception as e:
         print("[INFO]" + str(e))
     return googleTransResult
-# ----------翻譯結束----------
 
 
 # ----------繪製圖像----------
@@ -114,7 +112,6 @@ def drawImg(filteredOcrResult, imgPath):
         print("[INFO]" + str(e))
     img.save("./dist/temp.jpg")
     return img
-# ----------繪製圖像結束----------
 
 
 class TransResult:
@@ -139,5 +136,5 @@ def textTransModule(ocrlang, translang, imgPath):
         return result
     textTransResult = trans(translang, filteredOcrResult)
     result = TransResult(textTransResult, modImage)
-    # print("another")
+    # print("pass")
     return result

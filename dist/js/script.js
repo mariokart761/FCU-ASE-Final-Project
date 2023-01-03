@@ -1,3 +1,4 @@
+// dist-js
 // querySelector setting
 function $$(element) {
   return document.querySelector(element);
@@ -8,14 +9,12 @@ function $$all(element) {
 
 // animate setting
 const animateCSS = (element, animation, prefix = "animate__") =>
-  // We create a Promise and return it
   new Promise((resolve, reject) => {
     const animationName = `${prefix}${animation}`;
     const node = document.querySelector(element);
 
     node.classList.add(`${prefix}animated`, animationName);
 
-    // When the animation ends, we clean the classes and resolve the Promise
     function handleAnimationEnd(event) {
       event.stopPropagation();
       node.classList.remove(`${prefix}animated`, animationName);
@@ -37,9 +36,8 @@ function pageOutThenPageIn(pageOut, pageIn, doSomething) {
 function pageOutThenPageInWithLoad(pageOut, pageIn, somethingInLoading) {
   pageOutThenPageIn(pageOut, ".loading-page");
   somethingInLoading;
-  //先設定5秒過場
+  // 過場時間
   setTimeout(() => {
-    console.log("Delayed for 5 second.");
     pageOutThenPageIn(".loading-page", pageIn);
   }, "5000");
 }
@@ -56,11 +54,8 @@ function startTrans() {
 //較驗翻譯功能輸入是否合理，若合理則將資料發給後端
 function checkTransSettingInfo() {
   if (
-    // $$(".origin-lang-toggle").innerText == "來源語言" ||
-    // $$(".target-lang-toggle").innerText == "目標語言" ||
-    $$(".preview-trans-img").currentSrc == "" ||
-    $("#sourceLang").val() == $("#targetLang").val()
-    // $$(".origin-lang-toggle").innerText == $$(".target-lang-toggle").innerText
+    $$(".preview-trans-img").currentSrc == ""
+    // $("#sourceLang").val() == $("#targetLang").val() //較驗輸入是否能相同
   ) {
     showTransSettingError();
     return "deny";
@@ -82,10 +77,12 @@ function pageOutThenPageInReverse(pageOut, pageIn, doSomething) {
 }
 function backToHome(pageOut) {
   pageOutThenPageInReverse(pageOut, ".loading-page");
-  //設定2秒過場
+  //預設2秒過場
   setTimeout(() => {
-    console.log("Delayed for 2 second.");
     pageOutThenPageInReverse(".loading-page", ".home-page");
+    //清空翻譯結果畫面資料
+    $$("#resultImage").src = "";
+    $$('#transResult').innerText = "";
   }, "2000");
 }
 function changeOriginLang(thisObj) {
@@ -96,10 +93,6 @@ function changeTargetLang(thisObj) {
 }
 function resetData() {
   //清除(初始化)已輸入的資料
-  // $$(".origin-lang-toggle").innerText = "來源語言";
-  // $$(".target-lang-toggle").innerText = "目標語言";
-  // $$(".poker-class-toggle").innerText = "選擇類型";
-  // $$(".poker-play-style-toggle").innerText = "選擇玩法";
   $$(".preview-trans-img").src = "";
   $$(".preview-poker-img").src = "";
 }
@@ -113,21 +106,23 @@ function changePokerClass(thisObj) {
 
 //較驗樸克輸入資料
 function checkPokerSettingInfo() {
-  if (
-    // $$(".poker-class-toggle").innerText == "選擇類型" ||
-    // $$(".poker-play-style-toggle").innerText == "選擇玩法" ||
-    $$(".preview-poker-img").currentSrc == ""
-  ) {
+  if ($$(".preview-poker-img").currentSrc == "") {
     showPokerSettingError();
+    return "deny";
+  }
+}
+function showPokerSettingError() {
+  alert("輸入錯誤! 請檢查輸入是否完整。");
+  console.log("[Error]資料輸入需要修正，由前端擋下");
+}
+
+function startRecommend() {
+  if (checkPokerSettingInfo() == "deny") {
     return;
   }
   pageOutThenPageInWithLoad(
     ".poker-setting-page",
     ".poker-result-page",
-    waitTransResult()
+    fileToBackend()
   );
-}
-function showPokerSettingError() {
-  alert("輸入錯誤! 請檢查輸入是否完整。");
-  console.log("[Error]資料輸入需要修正，由前端擋下");
 }

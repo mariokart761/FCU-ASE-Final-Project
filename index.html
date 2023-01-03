@@ -35,14 +35,14 @@
       <h1 class="text-light animate__animated animate__bounce">ASE期末專案</h1>
       <button
         type="button"
-        class="btn btn-primary btn-lg shadow"
+        class="btn btn-primary btn-lg shadow font-weight-bold"
         onclick="pageOutThenPageIn('.home-page','.trans-setting-page',resetData())"
       >
         文字翻譯
       </button>
       <button
         type="button"
-        class="btn btn-primary btn-lg shadow"
+        class="btn btn-primary btn-lg shadow font-weight-bold"
         onclick="pageOutThenPageIn('.home-page','.poker-setting-page',resetData())"
       >
         樸克推薦
@@ -51,7 +51,7 @@
       <!-- Button trigger modal -->
       <button
         type="button"
-        class="btn btn-info"
+        class="btn btn-info font-weight-bold"
         data-toggle="modal"
         data-target="#aboutModal"
       >
@@ -117,7 +117,7 @@
 
     <!-- 翻譯設定介面 -->
     <div class="trans-setting-page d-none">
-      <div class="bg-secondary preview-img-container border shadow">
+      <div class="bg-dark preview-img-container border shadow">
         <img
           class="preview-img preview-trans-img"
           src=""
@@ -175,14 +175,16 @@
       <div class="start-and-back-button-flex">
         <button
           type="button"
-          class="btn btn-danger return-button"
+          class="btn btn-danger return-button font-weight-bold"
+          style="font-size: large"
           onclick="backToHome('.trans-setting-page')"
         >
           返回
         </button>
         <button
           type="button"
-          class="btn btn-primary trans-setting-button"
+          class="btn btn-primary trans-setting-button font-weight-bold"
+          style="font-size: large"
           onclick="startTrans()"
         >
           開始翻譯
@@ -192,13 +194,13 @@
 
     <!-- 翻譯結果介面 -->
     <div class="trans-result-page d-none">
-      <div class="bg-secondary result-img-container border shadow">
-        <!-- <img class="result-img" src="./img/trans_result_image.jpg" /> -->
+      <div class="bg-dark result-img-container border shadow">
         <img class="result-img" src="" alt="" id="resultImage" />
       </div>
       <h3 class="text-light">↓ 翻譯結果 ↓</h3>
       <div
-        class="text-left text-light bg-secondary result-text-container border shadow"
+        class="text-left text-light bg-dark result-text-container border shadow"
+        style="font-size: large"
       >
         <p
           id="transResult"
@@ -208,7 +210,8 @@
       </div>
       <button
         type="button"
-        class="btn btn-primary return-button"
+        class="btn btn-primary return-button font-weight-bold"
+        style="font-size: large"
         onclick="backToHome('.trans-result-page')"
       >
         再試一次
@@ -254,36 +257,7 @@
           <option value="onFieldPoker">場上的牌</option>
         </select>
       </div>
-      <!-- <div class="text-light text-and-togle-flex">
-        選擇牌的類型
-        <div class="btn-group trans-setting-button toggle-container">
-          <button
-            type="button"
-            class="btn btn-secondary dropdown-toggle poker-class-toggle"
-            data-toggle="dropdown"
-            data-display="static"
-            aria-expanded="false"
-          >
-            選擇類型
-          </button>
-          <div class="dropdown-menu dropdown-menu-lg-right">
-            <button
-              class="dropdown-item"
-              type="button"
-              onclick="changePokerClass(this)"
-            >
-              手牌
-            </button>
-            <button
-              class="dropdown-item"
-              type="button"
-              onclick="changePokerClass(this)"
-            >
-              場上的牌
-            </button>
-          </div>
-        </div>
-      </div> -->
+
       <!-- 選擇樸克玩法 -->
       <div class="text-light text-and-toggle-flex">
         選擇樸克玩法
@@ -297,55 +271,21 @@
           <option value="playStyle3">玩法3</option>
         </select>
       </div>
-      <!-- <div class="text-light text-and-togle-flex">
-        選擇牌的玩法
-        <div class="btn-group trans-setting-button toggle-container">
-          <button
-            type="button"
-            class="btn btn-secondary dropdown-toggle poker-play-style-toggle"
-            data-toggle="dropdown"
-            data-display="static"
-            aria-expanded="false"
-          >
-            選擇玩法
-          </button>
-          <div class="dropdown-menu dropdown-menu-lg-right">
-            <button
-              class="dropdown-item"
-              type="button"
-              onclick="changePlayStyle(this)"
-            >
-              玩法1
-            </button>
-            <button
-              class="dropdown-item"
-              type="button"
-              onclick="changePlayStyle(this)"
-            >
-              玩法2
-            </button>
-            <button
-              class="dropdown-item"
-              type="button"
-              onclick="changePlayStyle(this)"
-            >
-              玩法3
-            </button>
-          </div>
-        </div>
-      </div> -->
+
       <div class="start-and-back-button-flex">
         <button
           type="button"
-          class="btn btn-danger return-button"
+          class="btn btn-danger return-button font-weight-bold"
+          style="font-size: large"
           onclick="backToHome('.poker-setting-page')"
         >
           返回
         </button>
         <button
           type="button"
-          class="btn btn-primary poker-setting-button"
-          onclick="pageOutThenPageInWithLoad('.poker-setting-page', '.poker-result-page', checkPokerSettingInfo())"
+          class="btn btn-primary poker-setting-button font-weight-bold"
+          style="font-size: large"
+          onclick="pageOutThenPageInWithLoad('.poker-setting-page', '.poker-result-page', startRecommend())"
         >
           開始計算推薦
         </button>
@@ -353,13 +293,18 @@
     </div>
     <!-- 樸克結果介面 -->
     <div class="poker-result-page d-none">
-      <div class="bg-secondary result-img-container border shadow">
+      <div class="bg-dark result-img-container border shadow">
         <!-- <img class="result-img" src="./img/poker_result_image.jpg" /> -->
-        <img class="result-img" src="" alt="" id="resultImage" />
+        <img
+          class="preview-img preview-poker-img"
+          src=""
+          alt=""
+          id="resultPokerImage"
+        />
       </div>
       <h3 class="text-light">↓ 出牌推薦結果 ↓</h3>
       <div
-        class="text-left text-light bg-secondary result-poker-container border shadow"
+        class="text-left text-light bg-dark result-poker-container border shadow"
       >
         <p class="poker-result-text text-wrap">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur
@@ -370,7 +315,8 @@
       </div>
       <button
         type="button"
-        class="btn btn-primary return-button"
+        class="btn btn-primary return-button font-weight-bold"
+        style="font-size: large"
         onclick="backToHome('.poker-result-page')"
       >
         再試一次
@@ -423,6 +369,7 @@
         new Blob([imgBuffer], { type: "image/jpeg" })
       );
       $("#previewPokerImage").attr("src", previewURL);
+      $("#resultPokerImage").attr("src", previewURL);
     }
     async function fileToPokerBackend() {
       const { files } = eventTemp.target;
@@ -443,23 +390,5 @@
       $("#resultImage").attr("src", URL.createObjectURL(blob));
       eventTemp.target.value = "";
     }
-
-    // async function handlePokerFile(event) {
-    //   const { files } = event.target;
-    //   const imgBuffer = await readFileAsBuffer(files[0]);
-    //   const previewURL = URL.createObjectURL(
-    //     new Blob([imgBuffer], { type: "image/jpeg" })
-    //   );
-    //   $("#previewPokerImage").attr("src", previewURL);
-    //   const formData = new FormData();
-    //   formData.append("file", files[0]);
-    //   const response = await fetch("/api/upload", {
-    //     method: "post",
-    //     body: formData,
-    //   });
-    //   const blob = await response.blob();
-    //   $("#resultImage").attr("src", URL.createObjectURL(blob));
-    //   event.target.value = "";
-    // }
   </script>
 </html>
