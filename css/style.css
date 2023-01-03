@@ -21,7 +21,7 @@ body {
 }
 
 .trans-setting-page {
-  height: 80vh;
+  height: 95vh;
   display: flex;
   align-content: center;
   flex-wrap: nowrap;
@@ -31,7 +31,7 @@ body {
   align-items: center;
 }
 .poker-setting-page {
-  height: 80vh;
+  height: 95vh;
   display: flex;
   align-content: center;
   flex-wrap: nowrap;
@@ -41,7 +41,7 @@ body {
   align-items: center;
 }
 .trans-result-page {
-  height: 90vh;
+  height: 95vh;
   display: flex;
   align-content: center;
   flex-wrap: nowrap;
@@ -51,7 +51,7 @@ body {
   align-items: center;
 }
 .poker-result-page {
-  height: 90vh;
+  height: 95vh;
   display: flex;
   align-content: center;
   flex-wrap: nowrap;
@@ -145,7 +145,7 @@ body {
   padding: 5%;
 }
 .toggle-container {
-  width: 100px;
+  width: 120px;
   font-size: large;
 }
 .text-and-toggle-flex {
