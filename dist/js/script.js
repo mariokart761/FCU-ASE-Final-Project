@@ -74,7 +74,7 @@ function checkTransSettingInfo() {
 }
 //文字翻譯資料錯誤處理
 function showTransSettingError() {
-  alert("輸入錯誤! 請檢查輸入是否完整，且來源語言不可與目標語言相同。");
+  alert("輸入錯誤! 請檢查輸入是否完整。");
   console.log("[Error]資料輸入需要修正，由前端擋下");
 }
 

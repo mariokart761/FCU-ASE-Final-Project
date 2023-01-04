@@ -1,4 +1,4 @@
-// js
+// dist-js
 // querySelector setting
 function $$(element) {
   return document.querySelector(element);
@@ -33,13 +33,24 @@ function pageOutThenPageIn(pageOut, pageIn, doSomething) {
     animateCSS(pageIn, "bounceInRight").then((message) => {});
   });
 }
+
 function pageOutThenPageInWithLoad(pageOut, pageIn, somethingInLoading) {
   pageOutThenPageIn(pageOut, ".loading-page");
   somethingInLoading;
-  // 過場時間
-  setTimeout(() => {
-    pageOutThenPageIn(".loading-page", pageIn);
-  }, "5000");
+  //每秒確認一次是否得到回傳的圖片
+  function checkFlag() {
+    if($$("#resultImage").currentSrc == "") {
+        setTimeout(() => {
+            checkFlag();
+        }, 1000); 
+  
+       console.log("wait for response.");
+    } else {
+      /* do something*/
+      pageOutThenPageIn(".loading-page", pageIn);
+    }
+  }
+  checkFlag();
 }
 function startTrans() {
   if (checkTransSettingInfo() == "deny") {
@@ -63,7 +74,7 @@ function checkTransSettingInfo() {
 }
 //文字翻譯資料錯誤處理
 function showTransSettingError() {
-  alert("輸入錯誤! 請檢查輸入是否完整，且來源語言不可與目標語言相同。");
+  alert("輸入錯誤! 請檢查輸入是否完整。");
   console.log("[Error]資料輸入需要修正，由前端擋下");
 }
 
@@ -82,7 +93,7 @@ function backToHome(pageOut) {
     pageOutThenPageInReverse(".loading-page", ".home-page");
     //清空翻譯結果畫面資料
     $$("#resultImage").src = "";
-    $$('#transResult').innerText = "";
+    $$("#transResult").innerText = "";
   }, "2000");
 }
 function changeOriginLang(thisObj) {
